@@ -1,0 +1,16 @@
+{
+  "name": "monitoring",
+  "version": "1.0.0",
+  "description": "monitoring tool for universe",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "cbracco",
+  "license": "ISC",
+  "dependencies": {
+    "date-format-lite": "^17.7.0",
+    "get-ssl-certificate": "^2.2.1",
+    "url-exists-deep": "^1.1.1"
+  }
+}
