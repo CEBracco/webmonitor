@@ -60,6 +60,9 @@ function checkMunicipality(municipality){
       } else {
         isDown(municipality);
       }
+    })
+    .catch(function(){
+      isDown(municipality);
     });
 }
 
