@@ -1,6 +1,6 @@
 require("date-format-lite");
 
-var SSL_WARNING_TOLERANCE = -10;
+var SSL_WARNING_DAYS_TOLERANCE = -10;
 
 var municipalities = [];
 
@@ -13,7 +13,9 @@ function loadMunicipalities(){
 
 function validateMunicipalitiesSsl(){
   for (var i = 0; i < municipalities.length; i++) {
-    validateMunicipalitySsl(municipalities[i])
+    if(isMonitoringEnabled(municipalities[i], true)){
+      validateMunicipalitySsl(municipalities[i]);
+    }
   }
 }
 
@@ -23,15 +25,14 @@ function validateMunicipalitySsl(municipality){
   sslCertificate.get(municipality.urlSem.replace('https://',''))
     .then(function (certificate) {
       if(sslCertificateIsValid(certificate)){
-        if(sslCertificateIsGoingToExpire(certificate)){
-          console.log(`${municipality.nombre} SSL cert is valid. but is going to expire soon! (expire date: ${new Date(certificate.valid_to).format("DD/MM/YYYY")})`);
-        } else {
-          console.log(`${municipality.nombre} SSL cert is valid!`)
-        }
+        sslValid(municipality,certificate);
       } else {
-        console.log(`${municipality.nombre} SSL cert is EXPIRED! (expire date: ${new Date(certificate.valid_to).format("DD/MM/YYYY")})`);
+        sslNotValid(municipality,certificate);
       }
     })
+    .catch(function(){
+      console.log(`${municipality.nombre}, Problems obtaining SSL status.`)
+    });
 }
 
 function sslCertificateIsValid(certificate){
@@ -41,13 +42,23 @@ function sslCertificateIsValid(certificate){
 
 function sslCertificateIsGoingToExpire(certificate){
   var originalToDate = new Date(certificate.valid_to);
-  var comparableToDate = originalToDate.add(SSL_WARNING_TOLERANCE, "days");
+  var comparableToDate = originalToDate.add(SSL_WARNING_DAYS_TOLERANCE, "days");
   return new Date() >= comparableToDate;
+}
+
+function isMonitoringEnabled(municipality, excludeNonSSL = false){
+  if(excludeNonSSL){
+    return !eval(/(http:\/\/)?[0-9]{1,3}[\.\/].*/g).test(municipality.urlSem) && municipality.monitor;
+  } else {
+    return municipality.monitor;
+  }
 }
 
 function checkMunicipalities(){
   for (var i = 0; i < municipalities.length; i++) {
-    checkMunicipality(municipalities[i])
+    if(isMonitoringEnabled(municipalities[i])){
+      checkMunicipality(municipalities[i])
+    }
   }
 }
 
@@ -74,6 +85,17 @@ function isDown(municipality){
   console.log(municipality.nombre + " is DOWN!");
 }
 
+function sslValid(municipality,certificate){
+  if(sslCertificateIsGoingToExpire(certificate)){
+    console.log(`${municipality.nombre} SSL cert is valid. but is going to expire soon! (expire date: ${new Date(certificate.valid_to).format("DD/MM/YYYY")})`);
+  } else {
+    console.log(`${municipality.nombre} SSL cert is valid!`)
+  }
+}
+
+function sslNotValid(municipality,certificate){
+  console.log(`${municipality.nombre} SSL cert is EXPIRED! (expire date: ${new Date(certificate.valid_to).format("DD/MM/YYYY")})`);
+}
 
 loadMunicipalities();
 validateMunicipalitiesSsl();
