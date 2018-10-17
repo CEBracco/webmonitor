@@ -1,7 +1,10 @@
 require("date-format-lite");
 
 var SSL_WARNING_DAYS_TOLERANCE = -10;
+var CHECK_INTERVAL = 1;
+var CHECK_SSL_INTERVAL = 5;
 
+var logger =  require('./logger.js');
 var municipalities = [];
 
 function loadMunicipalities(){
@@ -12,6 +15,7 @@ function loadMunicipalities(){
 
 
 function validateMunicipalitiesSsl(){
+  logger.debug("Running SSL certs validation...");
   for (var i = 0; i < municipalities.length; i++) {
     if(isMonitoringEnabled(municipalities[i], true)){
       validateMunicipalitySsl(municipalities[i]);
@@ -31,7 +35,7 @@ function validateMunicipalitySsl(municipality){
       }
     })
     .catch(function(){
-      console.log(`${municipality.nombre}, Problems obtaining SSL status.`)
+      logger.warn(`${municipality.nombre}, Problems obtaining SSL status.`)
     });
 }
 
@@ -55,6 +59,7 @@ function isMonitoringEnabled(municipality, excludeNonSSL = false){
 }
 
 function checkMunicipalities(){
+  logger.debug("Check instances...");
   for (var i = 0; i < municipalities.length; i++) {
     if(isMonitoringEnabled(municipalities[i])){
       checkMunicipality(municipalities[i])
@@ -78,25 +83,27 @@ function checkMunicipality(municipality){
 }
 
 function isUp(municipality){
-  console.log(municipality.nombre + " is UP!");
+  // logger.info(municipality.nombre + " is UP!");
 }
 
 function isDown(municipality){
-  console.log(municipality.nombre + " is DOWN!");
+  logger.warn(municipality.nombre + " is DOWN!");
 }
 
 function sslValid(municipality,certificate){
   if(sslCertificateIsGoingToExpire(certificate)){
-    console.log(`${municipality.nombre} SSL cert is valid. but is going to expire soon! (expire date: ${new Date(certificate.valid_to).format("DD/MM/YYYY")})`);
+    logger.info(`${municipality.nombre} SSL cert is valid. but is going to expire soon! (expire date: ${new Date(certificate.valid_to).format("DD/MM/YYYY")})`);
   } else {
-    console.log(`${municipality.nombre} SSL cert is valid!`)
+    // logger.info(`${municipality.nombre} SSL cert is valid!`)
   }
 }
 
 function sslNotValid(municipality,certificate){
-  console.log(`${municipality.nombre} SSL cert is EXPIRED! (expire date: ${new Date(certificate.valid_to).format("DD/MM/YYYY")})`);
+  logger.warn(`${municipality.nombre} SSL cert is EXPIRED! (expire date: ${new Date(certificate.valid_to).format("DD/MM/YYYY")})`);
 }
 
 loadMunicipalities();
 validateMunicipalitiesSsl();
 checkMunicipalities();
+setInterval(validateMunicipalitiesSsl, CHECK_SSL_INTERVAL * 60000);
+setInterval(checkMunicipalities, CHECK_INTERVAL * 60000);
