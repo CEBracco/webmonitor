@@ -6,8 +6,9 @@ var logger =  require('./logger.js');
 var checker =  require('./core/checker.js');
 var sslChecker =  require('./core/sslChecker.js');
 var municipalities = [];
-var actuallyDown = require('./utils/downSet.js');;
-const humanizeDuration = require('humanize-duration')
+var actuallyDown = require('./utils/downSet.js');
+var alertBroker = require('./alert/alertBroker.js');
+const humanizeDuration = require('humanize-duration');
 
 function loadMunicipalities(){
   var fs = require('fs');
@@ -31,13 +32,17 @@ function isUp(municipality){
   if(actuallyDown.contains(municipality)){
     var log = actuallyDown.getLog(municipality);
     logger.info(`${municipality.nombre} is back UP!, it was down for ${humanizeDuration(new Date() - log.date)}`);
+    alertBroker.sendUpAlert(actuallyDown.getLog(municipality));
     actuallyDown.remove(municipality);
   }
 }
 
 function isDown(municipality){
   logger.warn(municipality.nombre + " is DOWN!");
-  actuallyDown.put(municipality);
+  if(!actuallyDown.contains(municipality)){
+    actuallyDown.put(municipality);
+    alertBroker.sendDownAlert(actuallyDown.getLog(municipality));
+  }  
 }
 
 loadMunicipalities();

@@ -1,6 +1,8 @@
+var RECHECK_STRATEGY="recheckInmediatly";
+
 var logger =  require('../logger.js');
 var urlExists = require('url-exists-deep');
-var recheckStrategy = require('./recheckStrategies/recheckInmediatlyStrategy.js');
+var recheckStrategy = require(`./recheckStrategies/${RECHECK_STRATEGY}Strategy.js`);
 var municipalities = [];
 var upFunction = function(){};
 var downFunction = function(){};
