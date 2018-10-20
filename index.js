@@ -1,6 +1,6 @@
 var SSL_WARNING_DAYS_TOLERANCE = -10;
 var CHECK_INTERVAL = 1;
-var CHECK_SSL_INTERVAL = 5;
+var CHECK_SSL_CRON = '57 17 * * *';
 
 var logger =  require('./logger.js');
 var checker =  require('./core/checker.js');
@@ -19,6 +19,7 @@ function loadMunicipalities(){
 function sslValid(municipality,isNextToExpire,certificate){
   if(isNextToExpire){
     logger.info(`${municipality.nombre} SSL cert is valid. but is going to expire soon! (expire date: ${new Date(certificate.valid_to).format("DD/MM/YYYY")})`);
+    alertBroker.sendSslGoingToExpireAlert(municipality,certificate);
   } else {
     // logger.info(`${municipality.nombre} SSL cert is valid!`)
   }
@@ -46,5 +47,5 @@ function isDown(municipality){
 }
 
 loadMunicipalities();
-sslChecker.execute(municipalities,CHECK_SSL_INTERVAL,SSL_WARNING_DAYS_TOLERANCE,sslValid,sslNotValid);
+sslChecker.execute(municipalities,CHECK_SSL_CRON,SSL_WARNING_DAYS_TOLERANCE,sslValid,sslNotValid);
 checker.execute(municipalities,CHECK_INTERVAL,isUp,isDown);

@@ -1,5 +1,6 @@
 require("date-format-lite");
 
+var cron = require('node-cron');
 var logger =  require('../logger.js');
 var municipalities = [];
 var sslValidFunction = function(){};
@@ -50,13 +51,14 @@ function sslCertificateIsGoingToExpire(certificate){
   return new Date() >= comparableToDate;
 }
 
-function execute(instances,checkSslInterval,sslWarningDaysTolerance,sslValidFn,sslNotValidFn){
+function execute(instances,checkSslCronExpr,sslWarningDaysTolerance,sslValidFn,sslNotValidFn){
   sslValidFunction = sslValidFn;
   sslNotValidFunction = sslNotValidFn;
   daysTolerance = sslWarningDaysTolerance;
   municipalities = instances;
-  validateMunicipalitiesSsl();
-  setInterval(validateMunicipalitiesSsl, checkSslInterval * 60000);
+  cron.schedule(checkSslCronExpr, () => {
+    validateMunicipalitiesSsl();
+  });
 }
 
 module.exports = {

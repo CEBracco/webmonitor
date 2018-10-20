@@ -39,8 +39,10 @@ function sendSslNotValidAlert(){
   
 }
 
-function sendSslGoingToExpireAlert(){
-  
+function sendSslGoingToExpireAlert(instance,certificate){
+  message.subject = `Monitor SSL Certificate Expiration Alert: ${instance.nombre}`;
+  message.html = getMailContent('mailSslGoingToExpire',{instance:instance, expireDate:new Date(certificate.valid_to).format("DD/MM/YYYY")});
+  sendMail(message);
 }
 
 function sendMail(message){

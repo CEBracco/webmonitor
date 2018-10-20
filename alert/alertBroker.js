@@ -12,13 +12,13 @@ function sendUpAlert(logEntry){
 }
 
 function sendSslNotValidAlert(){
-  logger.debug('Sending alerts!')
+  logger.debug('Sending SSL Cert not valid alerts!')
   mailSender.sendSslNotValidAlert();
 }
 
-function sendSslGoingToExpireAlert(){
-  logger.debug('Sending alerts!')
-  mailSender.sendSslGoingToExpireAlert();
+function sendSslGoingToExpireAlert(instance,certificate){
+  logger.debug('Sending SSL Cert expiration alerts!')
+  mailSender.sendSslGoingToExpireAlert(instance,certificate);
 }
 
 module.exports = {
