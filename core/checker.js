@@ -1,4 +1,6 @@
 var logger =  require('../logger.js');
+var urlExists = require('url-exists-deep');
+var recheckStrategy = require('./recheckStrategies/recheckInmediatlyStrategy.js');
 var municipalities = [];
 var upFunction = function(){};
 var downFunction = function(){};
@@ -21,17 +23,16 @@ function checkMunicipalities(){
 }
 
 function checkMunicipality(municipality){
-  var urlExists = require('url-exists-deep');
   urlExists(municipality.urlSem)
     .then(function(response){
       if (response) {
         upFunction(municipality);
       } else {
-        downFunction(municipality);
+        recheckStrategy.recheck(municipality,upFunction,downFunction);
       }
     })
     .catch(function(){
-      downFunction(municipality);
+      recheckStrategy.recheck(municipality,upFunction,downFunction);
     });
 }
 

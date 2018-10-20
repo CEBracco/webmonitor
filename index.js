@@ -6,19 +6,13 @@ var logger =  require('./logger.js');
 var checker =  require('./core/checker.js');
 var sslChecker =  require('./core/sslChecker.js');
 var municipalities = [];
+var actuallyDown = require('./utils/downSet.js');;
+const humanizeDuration = require('humanize-duration')
 
 function loadMunicipalities(){
   var fs = require('fs');
   var obj = JSON.parse(fs.readFileSync('municipalities.json', 'utf8'));
   municipalities = obj.municipalities;
-}
-
-function isUp(municipality){
-  // logger.info(municipality.nombre + " is UP!");
-}
-
-function isDown(municipality){
-  logger.warn(municipality.nombre + " is DOWN!");
 }
 
 function sslValid(municipality,isNextToExpire,certificate){
@@ -31,6 +25,19 @@ function sslValid(municipality,isNextToExpire,certificate){
 
 function sslNotValid(municipality,certificate){
   logger.warn(`${municipality.nombre} SSL cert is EXPIRED! (expire date: ${new Date(certificate.valid_to).format("DD/MM/YYYY")})`);
+}
+
+function isUp(municipality){
+  if(actuallyDown.contains(municipality)){
+    var log = actuallyDown.getLog(municipality);
+    logger.info(`${municipality.nombre} is back UP!, it was down for ${humanizeDuration(new Date() - log.date)}`);
+    actuallyDown.remove(municipality);
+  }
+}
+
+function isDown(municipality){
+  logger.warn(municipality.nombre + " is DOWN!");
+  actuallyDown.put(municipality);
 }
 
 loadMunicipalities();
