@@ -35,8 +35,10 @@ function sendUpAlert(logEntry){
   sendMail(message);
 }
 
-function sendSslNotValidAlert(){
-  
+function sendSslNotValidAlert(instance){
+  message.subject = `Monitor SSL Certificate NOT VALID Alert: ${instance.nombre}`;
+  message.html = getMailContent('mailSslNotValid',{instance:instance});
+  sendMail(message);
 }
 
 function sendSslGoingToExpireAlert(instance,certificate){

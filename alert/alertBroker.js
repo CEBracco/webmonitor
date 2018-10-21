@@ -11,9 +11,9 @@ function sendUpAlert(logEntry){
   mailSender.sendUpAlert(logEntry);
 }
 
-function sendSslNotValidAlert(){
+function sendSslNotValidAlert(instance){
   logger.debug('Sending SSL Cert not valid alerts!')
-  mailSender.sendSslNotValidAlert();
+  mailSender.sendSslNotValidAlert(instance);
 }
 
 function sendSslGoingToExpireAlert(instance,certificate){
