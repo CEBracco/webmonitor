@@ -10,12 +10,16 @@
   "license": "ISC",
   "dependencies": {
     "date-format-lite": "^17.7.0",
+    "dotenv": "^6.1.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
     "get-ssl-certificate": "^2.2.1",
     "humanize-duration": "^3.15.3",
     "lodash": "^4.17.11",
     "log4js": "^3.0.6",
     "node-cron": "^2.0.3",
     "nodemailer": "^4.6.8",
+    "unirest": "^0.5.1",
     "url-exists-deep": "^1.1.1"
   }
 }

@@ -1,26 +1,20 @@
-var MAIL_USER = '';
-var MAIL_PASSWORD = '';
-var MAIL_FROM = '';
-var MAIL_TO = '';
-var MAIL_CC = '';
-var MAIL_CCO = '';
-
 var _ = require('lodash');
 const humanizeDuration = require('humanize-duration');
 var logger =  require('../../../logger.js');
+var config =  require('../../../config/config.js');
 var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: MAIL_USER,
-    pass: MAIL_PASSWORD
+    user: config.get('MAIL_USER'),
+    pass: config.get('MAIL_PASSWORD')
   }
 });
 var message = {
-  from: MAIL_FROM,
-  to: MAIL_TO,
-  cc: MAIL_CC,
-  bcc: MAIL_CCO
+  from: config.get('MAIL_FROM'),
+  to: config.get('MAIL_TO'),
+  cc: config.get('MAIL_CC'),
+  bcc: config.get('MAIL_CCO')
 }
 
 function sendDownAlert(logEntry){

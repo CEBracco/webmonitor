@@ -1,8 +1,7 @@
-var RECHECK_STRATEGY="recheckInmediatly";
-
-var logger =  require('../logger.js');
+var logger = require('../logger.js');
+var config = require('../config/config.js');
 var urlExists = require('url-exists-deep');
-var recheckStrategy = require(`./recheckStrategies/${RECHECK_STRATEGY}Strategy.js`);
+var recheckStrategy = require(`./recheckStrategies/${config.get('RECHECK_STRATEGY')}Strategy.js`);
 var municipalities = [];
 var upFunction = function(){};
 var downFunction = function(){};
@@ -38,7 +37,8 @@ function checkMunicipality(municipality){
     });
 }
 
-function execute(instances,checkInterval,upFn,downFn){
+function execute(instances,upFn,downFn){
+  var checkInterval = config.get('CHECK_INTERVAL');
   upFunction = upFn;
   downFunction = downFn;
   municipalities = instances;

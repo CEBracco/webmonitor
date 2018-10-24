@@ -1,13 +1,10 @@
-var SSL_WARNING_DAYS_TOLERANCE = -10;
-var CHECK_INTERVAL = 1;
-var CHECK_SSL_CRON = '0 10 * * *';
-
 var logger =  require('./logger.js');
 var checker =  require('./core/checker.js');
 var sslChecker =  require('./core/sslChecker.js');
 var municipalities = [];
 var actuallyDown = require('./utils/downSet.js');
 var alertBroker = require('./alert/alertBroker.js');
+var server = require('./web/server.js');
 const humanizeDuration = require('humanize-duration');
 
 function loadMunicipalities(){
@@ -48,5 +45,6 @@ function isDown(municipality){
 }
 
 loadMunicipalities();
-sslChecker.execute(municipalities,CHECK_SSL_CRON,SSL_WARNING_DAYS_TOLERANCE,sslValid,sslNotValid);
-checker.execute(municipalities,CHECK_INTERVAL,isUp,isDown);
+server.start();
+sslChecker.execute(municipalities,sslValid,sslNotValid);
+checker.execute(municipalities,isUp,isDown);

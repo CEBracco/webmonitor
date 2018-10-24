@@ -2,6 +2,7 @@ require("date-format-lite");
 
 var cron = require('node-cron');
 var logger =  require('../logger.js');
+var config = require('../config/config.js')
 var municipalities = [];
 var sslValidFunction = function(){};
 var sslNotValidFunction = function(){};
@@ -47,14 +48,15 @@ function sslCertificateIsValid(certificate){
 
 function sslCertificateIsGoingToExpire(certificate){
   var originalToDate = new Date(certificate.valid_to);
-  var comparableToDate = originalToDate.add(daysTolerance, "days");
+  var comparableToDate = originalToDate.add(daysTolerance * -1, "days");
   return new Date() >= comparableToDate;
 }
 
-function execute(instances,checkSslCronExpr,sslWarningDaysTolerance,sslValidFn,sslNotValidFn){
+function execute(instances,sslValidFn,sslNotValidFn){
+  var checkSslCronExpr = config.get('CHECK_SSL_CRON');
+  daysTolerance = config.get('CHECK_SSL_WARNING_DAYS_TOLERANCE');
   sslValidFunction = sslValidFn;
   sslNotValidFunction = sslNotValidFn;
-  daysTolerance = sslWarningDaysTolerance;
   municipalities = instances;
   cron.schedule(checkSslCronExpr, () => {
     validateMunicipalitiesSsl();
