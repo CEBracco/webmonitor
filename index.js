@@ -41,7 +41,7 @@ function isDown(municipality){
   if(!actuallyDown.contains(municipality)){
     actuallyDown.put(municipality);
     alertBroker.sendDownAlert(actuallyDown.getLog(municipality));
-  }  
+  }
 }
 
 loadMunicipalities();

@@ -4,7 +4,10 @@ var logger =  require('../../../logger.js');
 var config =  require('../../../config/config.js');
 var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: config.get('MAIL_HOST'),
+  port: config.get('MAIL_PORT'),
+  secure: config.getBoolean('MAIL_SECURE'),
+  requireTLS: config.getBoolean('MAIL_REQUIRETLS'),
   auth: {
     user: config.get('MAIL_USER'),
     pass: config.get('MAIL_PASSWORD')
