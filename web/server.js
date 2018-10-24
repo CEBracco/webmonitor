@@ -1,12 +1,12 @@
 var logger =  require('../logger.js');
 var config = require('../config/config.js');
-var port = config.get('SERVER_PORT');
+var port = config.get('PORT');
 var pushUtils = require('../alert/senders/pushSender/utils/pushUtils.js');
 var pushNotifications = require('../alert/senders/pushSender/pushNotifications/pushNotifications.js');
 var express = require('express');
 var app = express();
 
-app.use(express.json()); 
+app.use(express.json());
 
 app.use('/', express.static(__dirname + '/app/static'));
 app.set('views', __dirname + '/app/views');
@@ -14,7 +14,7 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
 app.get(['/','/index.html'], function(req, res){
-    res.render("index", { 
+    res.render("index", {
       projectId:config.get('PUSH_PROJECTID'),
       apiKey:config.get('PUSH_APIKEY'),
       messagingSenderId:config.get('PUSH_MESSAGINGSENDERID'),
