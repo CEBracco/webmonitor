@@ -4,7 +4,8 @@
   "description": "monitoring tool for universe",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "node --require dotenv/config index.js"
   },
   "author": "cbracco",
   "license": "ISC",
