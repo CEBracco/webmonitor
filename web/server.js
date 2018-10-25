@@ -24,6 +24,7 @@ app.get(['/','/index.html'], function(req, res){
 
 app.get('/messagingSenderId.js', function(req, res){
   var content = `var messagingSenderId = "${config.get('PUSH_MESSAGINGSENDERID')}";`
+  res.set('Content-Type', 'application/javascript');
   res.send(content);
 });
 
