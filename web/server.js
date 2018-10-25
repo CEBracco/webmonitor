@@ -5,7 +5,9 @@ var pushUtils = require('../alert/senders/pushSender/utils/pushUtils.js');
 var pushNotifications = require('../alert/senders/pushSender/pushNotifications/pushNotifications.js');
 var express = require('express');
 var app = express();
+var secure = require('express-force-https');
 
+app.use(secure);
 app.use(express.json());
 
 app.use('/', express.static(__dirname + '/app/static'));
