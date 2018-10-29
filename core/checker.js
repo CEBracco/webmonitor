@@ -5,6 +5,7 @@ var recheckStrategy = require(`./recheckStrategies/${config.get('RECHECK_STRATEG
 var municipalities = [];
 var upFunction = function(){};
 var downFunction = function(){};
+var checkTimeout = config.get('CHECK_TIMEOUT');
 
 function isMonitoringEnabled(municipality, excludeNonSSL = false){
   if(excludeNonSSL){
@@ -39,7 +40,6 @@ function checkMunicipality(municipality){
 
 function execute(instances,upFn,downFn){
   var checkInterval = config.get('CHECK_INTERVAL');
-  var checkTimeout = config.get('CHECK_TIMEOUT');
   upFunction = upFn;
   downFunction = downFn;
   municipalities = instances;
