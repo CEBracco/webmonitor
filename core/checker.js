@@ -24,7 +24,7 @@ function checkMunicipalities(){
 }
 
 function checkMunicipality(municipality){
-  urlExists(municipality.urlSem)
+  urlExists(municipality.urlSem,{},'HEAD',checkTimeout * 1000)
     .then(function(response){
       if (response) {
         upFunction(municipality);
@@ -39,11 +39,12 @@ function checkMunicipality(municipality){
 
 function execute(instances,upFn,downFn){
   var checkInterval = config.get('CHECK_INTERVAL');
+  var checkTimeout = config.get('CHECK_TIMEOUT');
   upFunction = upFn;
   downFunction = downFn;
   municipalities = instances;
   checkMunicipalities();
-  setInterval(checkMunicipalities, checkInterval * 60000);
+  setInterval(checkMunicipalities, checkInterval * 1000);
 }
 
 module.exports = {
