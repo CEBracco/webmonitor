@@ -30,7 +30,7 @@ function sslNotValid(municipality,certificate){
 function isUp(municipality){
   if(actuallyDown.contains(municipality)){
     var log = actuallyDown.getLog(municipality);
-    logger.info(`${municipality.nombre} is back UP!, it was down for ${humanizeDuration(new Date() - log.date)}`);
+    logger.info(`${municipality.nombre} is back UP!, it was down for ${humanizeDuration(new Date() - log.date, { round: true })}`);
     alertBroker.sendUpAlert(actuallyDown.getLog(municipality));
     actuallyDown.remove(municipality);
   }

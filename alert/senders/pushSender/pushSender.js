@@ -8,7 +8,7 @@ function sendDownAlert(logEntry){
 }
 
 function sendUpAlert(logEntry){
-  pushUtils.sendToTopic(config.get('PUSH_TOPIC'), pushNotifications.upAlert(logEntry, humanizeDuration(new Date() - logEntry.date, { language: 'es' })));
+  pushUtils.sendToTopic(config.get('PUSH_TOPIC'), pushNotifications.upAlert(logEntry, humanizeDuration(new Date() - logEntry.date, { language: 'es', round: true })));
 }
 
 function sendSslNotValidAlert(instance){

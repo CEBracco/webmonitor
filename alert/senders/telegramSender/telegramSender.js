@@ -8,7 +8,7 @@ function sendDownAlert(logEntry){
 }
 
 function sendUpAlert(logEntry){
-  telegramUtils.broadcastMessage(messages.upAlert(logEntry, humanizeDuration(new Date() - logEntry.date, { language: 'es' })));
+  telegramUtils.broadcastMessage(messages.upAlert(logEntry, humanizeDuration(new Date() - logEntry.date, { language: 'es', round: true })));
 }
 
 function sendSslNotValidAlert(instance){

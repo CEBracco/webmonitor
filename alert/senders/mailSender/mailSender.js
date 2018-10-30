@@ -28,7 +28,7 @@ function sendDownAlert(logEntry){
 
 function sendUpAlert(logEntry){
   message.subject = `Monitor is UP: ${logEntry.instance.nombre}`;
-  message.html = getMailContent('mailUp',{logEntry:logEntry, downDuration:humanizeDuration(new Date() - logEntry.date)});
+  message.html = getMailContent('mailUp',{logEntry:logEntry, downDuration:humanizeDuration(new Date() - logEntry.date, { round: true })});
   sendMail(message);
 }
 
