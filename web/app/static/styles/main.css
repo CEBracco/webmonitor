@@ -36,3 +36,10 @@ h3 {
   padding-left: 50px;
   color: white;
 }
+.footer-banner{
+  text-align: center;
+}
+.telegram-banner img{
+  height: 42px;
+  margin-right: 10px;
+}
