@@ -58,6 +58,14 @@
         </div>
       </div>
 
+      <% if(telegramChannelUrl && telegramChannelUrl != ''){ %>
+      <div class="mdl-cell mdl-cell--12-col footer-banner telegram-banner">
+        <a href="<%= telegramChannelUrl %>">
+          <h6><img src="imgs/telegram-logo.png">¡Suscribite al canal en Telegram!</h6>
+        </a>
+      </div>
+      <% } %>
+
     </div>
   </main>
 </div>
@@ -67,7 +75,7 @@
 <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-messaging.js"></script>
 <script>
   var projectId="<%= projectId %>";
-  var apiKey="<%= apiKey %>"; 
+  var apiKey="<%= apiKey %>";
   var messagingSenderId="<%= messagingSenderId %>";
   var publicVapidKey="<%= publicVapidKey %>";
 </script>

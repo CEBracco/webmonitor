@@ -20,7 +20,8 @@ app.get(['/','/index.html'], function(req, res){
       projectId:config.get('PUSH_PROJECTID'),
       apiKey:config.get('PUSH_APIKEY'),
       messagingSenderId:config.get('PUSH_MESSAGINGSENDERID'),
-      publicVapidKey:config.get('PUSH_PUBLICVAPIDKEY')
+      publicVapidKey:config.get('PUSH_PUBLICVAPIDKEY'),
+      telegramChannelUrl:config.get('TELEGRAM_CHANNEL_URL')
     });
 });
 
