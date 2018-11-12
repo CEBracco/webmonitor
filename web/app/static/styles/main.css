@@ -36,10 +36,17 @@ h3 {
   padding-left: 50px;
   color: white;
 }
+.mdl-card__supporting-text{
+  width:100%;
+}
 .footer-banner{
   text-align: center;
 }
-.telegram-banner img{
+.footer-banner h6{
+  margin: 0px;
+}
+.footer-banner img{
   height: 42px;
-  margin-right: 10px;
+  margin-right: 5px;
+  margin-left: 5px;
 }
