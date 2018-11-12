@@ -21,7 +21,8 @@ app.get(['/','/index.html'], function(req, res){
       apiKey:config.get('PUSH_APIKEY'),
       messagingSenderId:config.get('PUSH_MESSAGINGSENDERID'),
       publicVapidKey:config.get('PUSH_PUBLICVAPIDKEY'),
-      telegramChannelUrl:config.get('TELEGRAM_CHANNEL_URL')
+      telegramChannelUrl:config.get('TELEGRAM_CHANNEL_URL'),
+      slackChannelUrl:config.get('SLACK_CHANNEL_URL')
     });
 });
 

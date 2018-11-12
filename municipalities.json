@@ -109,6 +109,12 @@
             "monitor": true
         },
         {
+            "nombre": "Pehuajó",
+            "urlSem": "https://pehuajo.dat.cespi.unlp.edu.ar",
+            "urlCoreSem": "https://core-pehuajo.dat.cespi.unlp.edu.ar",
+            "monitor": true
+        },
+        {
             "nombre": "Pilar",
             "urlSem": "https://pilar.dat.cespi.unlp.edu.ar",
             "urlCoreSem": "https://core-pilar.dat.cespi.unlp.edu.ar",
