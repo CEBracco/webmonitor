@@ -10,7 +10,7 @@
             "nombre": "Azul",
             "urlSem": "https://azul.dat.cespi.unlp.edu.ar",
             "urlCoreSem": "https://core-azul.dat.cespi.unlp.edu.ar",
-            "monitor": true
+            "monitor": false
         },
         {
             "nombre": "Bariloche",
