@@ -1,17 +1,13 @@
+var _ = require('lodash');
 var logger =  require('./logger.js');
 var checker =  require('./core/checker.js');
 var sslChecker =  require('./core/sslChecker.js');
+var instanceRepository = require('./repository/instance/instanceRepository.js');
 var municipalities = [];
 var actuallyDown = require('./utils/downSet.js');
 var alertBroker = require('./alert/alertBroker.js');
 var server = require('./web/server.js');
 const humanizeDuration = require('humanize-duration');
-
-function loadMunicipalities(){
-  var fs = require('fs');
-  var obj = JSON.parse(fs.readFileSync('municipalities.json', 'utf8'));
-  municipalities = obj.municipalities;
-}
 
 function sslValid(municipality,isNextToExpire,certificate){
   if(isNextToExpire){
@@ -44,7 +40,14 @@ function isDown(municipality){
   }
 }
 
-loadMunicipalities();
-server.start();
-sslChecker.execute(municipalities,sslValid,sslNotValid);
-checker.execute(municipalities,isUp,isDown);
+function startApp(){
+  server.start();
+  sslChecker.execute(municipalities,sslValid,sslNotValid);
+  checker.execute(municipalities,isUp,isDown);
+}
+
+instanceRepository.listAll(function(instances) {
+  municipalities=instances;
+  logger.info(`Instances fetched, proceeding to check: ${_.map(_.filter(municipalities, {'habilitado': true }), 'nombre').join(', ')}`);
+  startApp();
+})
