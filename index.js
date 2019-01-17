@@ -48,6 +48,6 @@ function startApp(){
 
 instanceRepository.listAll(function(instances) {
   municipalities=instances;
-  logger.info(`Instances fetched, proceeding to check: ${_.map(_.filter(municipalities, {'habilitado': true }), 'nombre').join(', ')}`);
+  logger.info(`Instances fetched, proceeding to check: ${_.map(_.filter(municipalities, {'habilitado': true }), 'nombre').sort().join(', ')}`);
   startApp();
 })
