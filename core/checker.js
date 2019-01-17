@@ -9,9 +9,9 @@ var checkTimeout = config.get('CHECK_TIMEOUT');
 
 function isMonitoringEnabled(municipality, excludeNonSSL = false){
   if(excludeNonSSL){
-    return !eval(/(http:\/\/)?[0-9]{1,3}[\.\/].*/g).test(municipality.urlSem) && municipality.monitor;
+    return !eval(/(http:\/\/)?[0-9]{1,3}[\.\/].*/g).test(municipality.urlMunicipio) && municipality.habilitado;
   } else {
-    return municipality.monitor;
+    return municipality.habilitado;
   }
 }
 
@@ -25,7 +25,7 @@ function checkMunicipalities(){
 }
 
 function checkMunicipality(municipality){
-  urlExists(municipality.urlSem,{},'HEAD',checkTimeout * 1000)
+  urlExists(municipality.urlMunicipio,{},'HEAD',checkTimeout * 1000)
     .then(function(response){
       if (response) {
         upFunction(municipality);

@@ -7,7 +7,7 @@ function downAlert(logEntry){
           fallback: `Monitor DOWN: ${logEntry.instance.nombre}`,
           color: "#b71c1c",
           title: `Monitor DOWN: ${logEntry.instance.nombre}`,
-          text: `¡La instancia no esta respondiendo! <${logEntry.instance.urlSem}|Verificar...>`,
+          text: `¡La instancia no esta respondiendo! <${logEntry.instance.urlMunicipio}|Verificar...>`,
           footer: "Webmonitor",
           footer_icon: `${config.get('URL')}/imgs/logo.png`
       }
@@ -23,7 +23,7 @@ function upAlert(logEntry, downDuration){
           fallback: `Monitor UP: ${logEntry.instance.nombre}`,
           color: "#33691e",
           title: `Monitor UP: ${logEntry.instance.nombre}`,
-          text: `La instancia esta nuevamente activa (inactiva por ${downDuration}) <${logEntry.instance.urlSem}|Verificar...>`,
+          text: `La instancia esta nuevamente activa (inactiva por ${downDuration}) <${logEntry.instance.urlMunicipio}|Verificar...>`,
           footer: "Webmonitor",
           footer_icon: `${config.get('URL')}/imgs/logo.png`
       }
@@ -39,7 +39,7 @@ function sslGoingToExpireAlert(instance, expireDate){
           fallback: `SSL Monitor: ${instance.nombre}`,
           color: "#ffea00",
           title: `SSL Monitor: ${instance.nombre}`,
-          text: `El certificado vence el ${expireDate} <${instance.urlSem}|Verificar...>`,
+          text: `El certificado vence el ${expireDate} <${instance.urlMunicipio}|Verificar...>`,
           footer: "Webmonitor",
           footer_icon: `${config.get('URL')}/imgs/alt-logo.png`
       }
@@ -55,7 +55,7 @@ function sslNotValidAlert(instance){
           fallback: `SSL Monitor: ${instance.nombre}`,
           color: "#b71c1c",
           title: `SSL Monitor: ${instance.nombre}`,
-          text: `El certificado NO es valido! <${instance.urlSem}|Verificar...>`,
+          text: `El certificado NO es valido! <${instance.urlMunicipio}|Verificar...>`,
           footer: "Webmonitor",
           footer_icon: `${config.get('URL')}/imgs/logo.png`
       }

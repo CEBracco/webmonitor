@@ -7,7 +7,7 @@ var checkTimeout = config.get('CHECK_TIMEOUT');
 function recheck(municipality,upFunction,downFunction,attempts = numberOfAttemps){
   if(attempts > 0){
     logger.debug('Rechecking '+ municipality.nombre);
-    urlExists(municipality.urlSem,{},'HEAD',checkTimeout * 1000)
+    urlExists(municipality.urlMunicipio,{},'HEAD',checkTimeout * 1000)
     .then(function(response){
       if (response) {
         upFunction(municipality);
