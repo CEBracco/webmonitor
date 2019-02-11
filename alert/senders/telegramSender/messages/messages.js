@@ -12,12 +12,12 @@ function upAlert(logEntry, downDuration){
 
 function sslGoingToExpireAlert(instance, expireDate){
   return `<b>SSL Monitor: ${instance.nombre}</b>\n`
-  + `El certificado vence el ${expireDate} <a href="${instance.urlMunicipio}">Verificar...</a>`;
+  + `El certificado vence el ${expireDate} <a href="${config.get('URL_SSL_INFO')}${instance.urlMunicipio}">Verificar...</a>`;
 }
 
 function sslNotValidAlert(instance){
   return `<b>SSL Monitor: ${instance.nombre}</b>\n`
-  + `El certificado NO es valido! <a href="${instance.urlMunicipio}">Verificar...</a>`;
+  + `El certificado NO es valido! <a href="${config.get('URL_SSL_INFO')}${instance.urlMunicipio}">Verificar...</a>`;
 }
 
 module.exports = {

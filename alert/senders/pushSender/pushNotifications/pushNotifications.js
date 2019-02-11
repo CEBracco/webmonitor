@@ -31,7 +31,7 @@ function sslGoingToExpireAlert(instance, expireDate){
   return {
     "title": `SSL Monitor: ${instance.nombre}`,
     "body": `El certificado vence el ${expireDate}`,
-    "click_action": instance.urlMunicipio,
+    "click_action": `${config.get('URL_SSL_INFO')}${instance.urlMunicipio}`,
     "icon": `${config.get('URL')}/imgs/cert_warning.png`
   }
 }
@@ -40,7 +40,7 @@ function sslNotValidAlert(instance){
   return {
     "title": `SSL Monitor: ${instance.nombre}`,
     "body": `El certificado NO es valido!`,
-    "click_action": instance.urlMunicipio,
+    "click_action": `${config.get('URL_SSL_INFO')}${instance.urlMunicipio}`,
     "icon": `${config.get('URL')}/imgs/cert_error.png`
   }
 }

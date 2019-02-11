@@ -39,7 +39,7 @@ function sslGoingToExpireAlert(instance, expireDate){
           fallback: `SSL Monitor: ${instance.nombre}`,
           color: "#ffea00",
           title: `SSL Monitor: ${instance.nombre}`,
-          text: `El certificado vence el ${expireDate} <${instance.urlMunicipio}|Verificar...>`,
+          text: `El certificado vence el ${expireDate} <${config.get('URL_SSL_INFO')}${instance.urlMunicipio}|Verificar...>`,
           footer: "Webmonitor",
           footer_icon: `${config.get('URL')}/imgs/alt-logo.png`
       }
@@ -55,7 +55,7 @@ function sslNotValidAlert(instance){
           fallback: `SSL Monitor: ${instance.nombre}`,
           color: "#b71c1c",
           title: `SSL Monitor: ${instance.nombre}`,
-          text: `El certificado NO es valido! <${instance.urlMunicipio}|Verificar...>`,
+          text: `El certificado NO es valido! <${config.get('URL_SSL_INFO')}${instance.urlMunicipio}|Verificar...>`,
           footer: "Webmonitor",
           footer_icon: `${config.get('URL')}/imgs/logo.png`
       }
