@@ -10,9 +10,9 @@ var daysTolerance = -1;
 
 function isMonitoringEnabled(municipality, excludeNonSSL = false){
   if(excludeNonSSL){
-    return !eval(/(http:\/\/)?[0-9]{1,3}[\.\/].*/g).test(municipality.urlSem) && municipality.monitor;
+    return !eval(/(http:\/\/)?[0-9]{1,3}[\.\/].*/g).test(municipality.urlMunicipio) && municipality.habilitado;
   } else {
-    return municipality.monitor;
+    return municipality.habilitado;
   }
 }
 
@@ -28,7 +28,7 @@ function validateMunicipalitiesSsl(){
 function validateMunicipalitySsl(municipality){
   var sslCertificate = require("get-ssl-certificate")
 
-  sslCertificate.get(municipality.urlSem.replace('https://',''))
+  sslCertificate.get(municipality.urlMunicipio.replace('https://',''))
     .then(function (certificate) {
       if(sslCertificateIsValid(certificate)){
         sslValidFunction(municipality,sslCertificateIsGoingToExpire(certificate),certificate);

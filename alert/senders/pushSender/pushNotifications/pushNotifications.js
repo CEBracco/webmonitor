@@ -13,7 +13,7 @@ function downAlert(logEntry){
   return {
     "title": `Monitor DOWN: ${logEntry.instance.nombre}`,
     "body": '¡La instancia no esta respondiendo!',
-    "click_action": logEntry.instance.urlSem,
+    "click_action": logEntry.instance.urlMunicipio,
     "icon": `${config.get('URL')}/imgs/down.png`
   }
 }
@@ -22,7 +22,7 @@ function upAlert(logEntry, downDuration){
   return {
     "title": `Monitor UP: ${logEntry.instance.nombre}`,
     "body": `La instancia esta nuevamente activa (inactiva por ${downDuration})`,
-    "click_action": logEntry.instance.urlSem,
+    "click_action": logEntry.instance.urlMunicipio,
     "icon": `${config.get('URL')}/imgs/up.png`
   }
 }
@@ -31,7 +31,7 @@ function sslGoingToExpireAlert(instance, expireDate){
   return {
     "title": `SSL Monitor: ${instance.nombre}`,
     "body": `El certificado vence el ${expireDate}`,
-    "click_action": instance.urlSem,
+    "click_action": `${config.get('URL_SSL_INFO')}${instance.urlMunicipio}`,
     "icon": `${config.get('URL')}/imgs/cert_warning.png`
   }
 }
@@ -40,7 +40,7 @@ function sslNotValidAlert(instance){
   return {
     "title": `SSL Monitor: ${instance.nombre}`,
     "body": `El certificado NO es valido!`,
-    "click_action": instance.urlSem,
+    "click_action": `${config.get('URL_SSL_INFO')}${instance.urlMunicipio}`,
     "icon": `${config.get('URL')}/imgs/cert_error.png`
   }
 }
