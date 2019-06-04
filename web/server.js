@@ -47,8 +47,15 @@ app.post('/api/subscribe_user', function (req, res) {
   res.send(JSON.stringify(responseObject));
 });
 
+function initWebsocketServer(server) {
+  var wsServer = require('../alert/senders/websocketSender/server/websocketServer.js');
+  return wsServer.start(server);
+}
+
 function start(){
-  app.listen(port, function () {
+  const server = require('http').createServer(app);
+  initWebsocketServer(server);
+  server.listen(port, function () {
     logger.debug("Static file server running at port => " + port);
   });
 }
