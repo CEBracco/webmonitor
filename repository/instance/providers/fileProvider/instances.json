@@ -1,8 +1,11 @@
 {
   "instances": [
     {
+      "id": 0,
+      "codigo": "0",
+      "codigoDescripcion": "TEST",
       "nombre": "Test",
-      "urlMunicipio": "http://163.10.20.80/universe-web",
+      "urlMunicipio": "http://localhost:8887",
       "urlSem": "http://163.10.20.80/universe-core",
       "habilitado": true
     }
