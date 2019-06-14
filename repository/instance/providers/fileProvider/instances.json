@@ -5,7 +5,7 @@
       "codigo": "0",
       "codigoDescripcion": "TEST",
       "nombre": "Test",
-      "urlMunicipio": "http://localhost:8887",
+      "urlMunicipio": "http://163.10.20.80/universe-web",
       "urlSem": "http://163.10.20.80/universe-core",
       "habilitado": true
     }
