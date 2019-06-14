@@ -9,10 +9,9 @@ var checkTimeout = config.get('CHECK_TIMEOUT');
 
 function isMonitoringEnabled(municipality, excludeNonSSL = false){
   if(excludeNonSSL){
-    return !eval(/(http:\/\/)?[0-9]{1,3}[\.\/].*/g).test(municipality.urlMunicipio) && municipality.habilitado;
-  } else {
-    return municipality.habilitado;
+    return !eval(/(http:\/\/)?[0-9]{1,3}[\.\/].*/g).test(municipality.urlMunicipio);
   }
+  return true;
 }
 
 function checkMunicipalities(){
