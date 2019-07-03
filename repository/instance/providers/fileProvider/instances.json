@@ -5,8 +5,9 @@
       "codigo": "0",
       "codigoDescripcion": "TEST",
       "nombre": "Test",
-      "urlMunicipio": "http://163.10.20.80/universe-web",
-      "urlSem": "http://163.10.20.80/universe-core",
+      "urlMunicipio": "https://test.dat.cespi.unlp.edu.ar",
+      "urlCore": "https://core-test.dat.cespi.unlp.edu.ar",
+      "urlSem": "https://core-test.dat.cespi.unlp.edu.ar/mobile",
       "habilitado": true
     }
   ]
