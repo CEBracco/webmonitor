@@ -26,6 +26,18 @@ app.get(['/','/index.html'], function(req, res){
     });
 });
 
+app.get(['/status'], function (req, res) {
+  var instanceStatuses = [];
+  global.municipalities.forEach(instance => {
+    let instanceCopy = Object.assign({}, instance);
+    instanceCopy.isDown = global.actuallyDown.contains(instance);
+    instanceCopy.status = instanceCopy.isDown ? 'DOWN' : 'UP';
+    instanceStatuses.push(instanceCopy)
+  });
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify({ status: instanceStatuses }));
+});
+
 app.get('/messagingSenderId.js', function(req, res){
   var content = `var messagingSenderId = "${config.get('PUSH_MESSAGINGSENDERID')}";`
   res.set('Content-Type', 'application/javascript');

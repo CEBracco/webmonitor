@@ -3,8 +3,8 @@ var logger =  require('./logger.js');
 var checker =  require('./core/checker.js');
 var sslChecker =  require('./core/sslChecker.js');
 var instanceRepository = require('./repository/instance/instanceRepository.js');
-var municipalities = [];
-var actuallyDown = require('./utils/downSet.js');
+global.municipalities = [];
+global.actuallyDown = require('./utils/downSet.js');
 var alertBroker = require('./alert/alertBroker.js');
 var server = require('./web/server.js');
 const humanizeDuration = require('humanize-duration');
@@ -24,30 +24,30 @@ function sslNotValid(municipality,certificate){
 }
 
 function isUp(municipality){
-  if(actuallyDown.contains(municipality)){
-    var log = actuallyDown.getLog(municipality);
+  if(global.actuallyDown.contains(municipality)){
+    var log = global.actuallyDown.getLog(municipality);
     logger.info(`${municipality.nombre} is back UP!, it was down for ${humanizeDuration(new Date() - log.date, { round: true })}`);
-    alertBroker.sendUpAlert(actuallyDown.getLog(municipality));
-    actuallyDown.remove(municipality);
+    alertBroker.sendUpAlert(global.actuallyDown.getLog(municipality));
+    global.actuallyDown.remove(municipality);
   }
 }
 
 function isDown(municipality){
   logger.warn(municipality.nombre + " is DOWN!");
-  if(!actuallyDown.contains(municipality)){
-    actuallyDown.put(municipality);
-    alertBroker.sendDownAlert(actuallyDown.getLog(municipality));
+  if(!global.actuallyDown.contains(municipality)){
+    global.actuallyDown.put(municipality);
+    alertBroker.sendDownAlert(global.actuallyDown.getLog(municipality));
   }
 }
 
 function startApp(){
   server.start();
-  sslChecker.execute(municipalities,sslValid,sslNotValid);
-  checker.execute(municipalities,isUp,isDown);
+  sslChecker.execute(global.municipalities,sslValid,sslNotValid);
+  checker.execute(global.municipalities,isUp,isDown);
 }
 
 instanceRepository.listAll(function(instances) {
-  municipalities=instances;
-  logger.info(`Instances fetched, proceeding to check: ${_.map(municipalities, 'nombre').sort().join(', ')}`);
+  global.municipalities=instances;
+  logger.info(`Instances fetched, proceeding to check: ${_.map(global.municipalities, 'nombre').sort().join(', ')}`);
   startApp();
 })
