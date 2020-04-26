@@ -8,6 +8,9 @@ var downFunction = function(){};
 var checkTimeout = config.get('CHECK_TIMEOUT');
 
 function isMonitoringEnabled(municipality, excludeNonSSL = false){
+  if('monitor' in municipality && !municipality.monitor) {
+    return false;
+  }
   if(excludeNonSSL){
     return !eval(/(http:\/\/)?[0-9]{1,3}[\.\/].*/g).test(municipality.urlMunicipio);
   }
