@@ -1,6 +1,6 @@
 var logger =  require('../logger.js');
 var config = require('../config/config.js');
-var port = config.get('PORT');
+var port = config.get('PORT') ;
 var pushUtils = require('../alert/senders/pushSender/utils/pushUtils.js');
 var pushNotifications = require('../alert/senders/pushSender/pushNotifications/pushNotifications.js');
 var express = require('express');
@@ -24,6 +24,18 @@ app.get(['/','/index.html'], function(req, res){
       telegramChannelUrl:config.get('TELEGRAM_CHANNEL_URL'),
       slackChannelUrl:config.get('SLACK_CHANNEL_URL')
     });
+});
+
+app.get(['/status'], function (req, res) {
+  var instanceStatuses = [];
+  global.municipalities.forEach(instance => {
+    let instanceCopy = Object.assign({}, instance);
+    instanceCopy.isDown = global.actuallyDown.contains(instance);
+    instanceCopy.status = instanceCopy.isDown ? 'DOWN' : 'UP';
+    instanceStatuses.push(instanceCopy)
+  });
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify({ status: instanceStatuses }));
 });
 
 app.get('/messagingSenderId.js', function(req, res){
@@ -55,6 +67,7 @@ function initWebsocketServer(server) {
 function start(){
   const server = require('http').createServer(app);
   initWebsocketServer(server);
+  port = port ? port : 3000;
   server.listen(port, function () {
     logger.debug("Static file server running at port => " + port);
   });

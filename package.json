@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "node --require dotenv/config index.js"
+    "test": "nodemon --require dotenv/config index.js"
   },
   "author": "cbracco",
   "license": "ISC",
@@ -22,6 +22,7 @@
     "log4js": "^3.0.6",
     "node-cron": "^2.0.3",
     "nodemailer": "^4.6.8",
+    "nodemon": "^2.0.20",
     "unirest": "^0.5.1",
     "url-exists-deep": "^1.1.1",
     "websocket": "^1.0.28"
